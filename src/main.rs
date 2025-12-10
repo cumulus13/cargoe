@@ -13,7 +13,7 @@ use commands::*;
 #[command(
     name = "cargoe",
     version,
-    about = "Advanced Cargo.toml management tool",
+    about = "Advanced Cargo.toml management tool by Hadi Cahyadi <cumulus13@gmail.com>",
     long_about = "A powerful CLI tool for managing Cargo.toml fields that cargo doesn't handle directly.\nSupports exclude/include patterns, keywords, categories, badges, and more."
 )]
 struct Cli {
