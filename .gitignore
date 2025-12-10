@@ -1,0 +1,10 @@
+# PT backup directory
+.pt/
+
+# Added entries (3 items)
+build.bat
+*.exe
+*sublime*
+
+# Added entries (1 items)
+target/
