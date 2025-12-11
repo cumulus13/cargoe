@@ -149,5 +149,6 @@ fn is_valid_spdx_license(license: &str) -> bool {
         "MIT OR Apache-2.0",
         "MIT AND Apache-2.0",
     ];
-    common.iter().any(|&l| license == l) || license.contains(" OR ") || license.contains(" AND ")
+    // common.iter().any(|&l| license == l) || license.contains(" OR ") || license.contains(" AND ")
+    common.contains(&license) || license.contains(" OR ") || license.contains(" AND ")
 }
