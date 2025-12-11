@@ -49,7 +49,7 @@ fn add(path: &Path, keywords: Vec<String>, dry_run: bool, quiet: bool) -> Result
             continue;
         }
 
-        let exists = kw.iter().any(|v| v.as_str().map_or(false, |s| s == keyword));
+        let exists = kw.iter().any(|v| v.as_str().is_some_and(|s| s == keyword));
 
         if !exists {
             if current_count >= 5 {
@@ -92,7 +92,7 @@ fn remove(path: &Path, keywords: Vec<String>, dry_run: bool, quiet: bool) -> Res
     for keyword in keywords {
         let mut indices = Vec::new();
         for (i, v) in kw.iter().enumerate() {
-            if v.as_str().map_or(false, |s| s == keyword) {
+            if v.as_str().is_some_and(|s| s == keyword) {
                 indices.push(i);
             }
         }
@@ -131,11 +131,7 @@ fn list(path: &Path) -> Result<()> {
                     println!("Keywords ({}/5):", arr.len());
                     for v in arr.iter() {
                         if let Some(s) = v.as_str() {
-                            let len_indicator = if s.len() > 20 {
-                                " ⚠ (too long)"
-                            } else {
-                                ""
-                            };
+                            let len_indicator = if s.len() > 20 { " ⚠ (too long)" } else { "" };
                             println!("  • {}{}", s, len_indicator);
                         }
                     }

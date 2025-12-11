@@ -28,7 +28,7 @@ fn add(path: &Path, patterns: Vec<String>, dry_run: bool, quiet: bool) -> Result
     for pattern in patterns {
         let exists = exclude
             .iter()
-            .any(|v| v.as_str().map_or(false, |s| s == pattern));
+            .any(|v| v.as_str().is_some_and(|s| s == pattern));
 
         if !exists {
             if !dry_run {
@@ -63,7 +63,7 @@ fn remove(path: &Path, patterns: Vec<String>, dry_run: bool, quiet: bool) -> Res
     for pattern in patterns {
         let mut indices = Vec::new();
         for (i, v) in exclude.iter().enumerate() {
-            if v.as_str().map_or(false, |s| s == pattern) {
+            if v.as_str().is_some_and(|s| s == pattern) {
                 indices.push(i);
             }
         }

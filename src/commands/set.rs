@@ -28,13 +28,17 @@ pub fn handle(path: &Path, field: &str, value: &str, dry_run: bool, quiet: bool)
     }
 
     let mut manifest = Manifest::load(path)?;
-    
+
     // Check for hints before mutating
-    let should_hint_homepage = field == "repository" && 
-        manifest.package().map_or(false, |p| !p.contains_key("homepage"));
-    let should_hint_license_file = field == "license" && 
-        manifest.package().map_or(false, |p| !p.contains_key("license-file"));
-    
+    let should_hint_homepage = field == "repository"
+        && manifest
+            .package()
+            .is_some_and(|p| !p.contains_key("homepage"));
+    let should_hint_license_file = field == "license"
+        && manifest
+            .package()
+            .is_some_and(|p| !p.contains_key("license-file"));
+
     let package = manifest.package_mut()?;
 
     // Special handling for arrays

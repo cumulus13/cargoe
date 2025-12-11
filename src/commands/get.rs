@@ -5,9 +5,7 @@ use std::path::Path;
 
 pub fn handle(path: &Path, field: &str) -> Result<()> {
     let manifest = Manifest::load(path)?;
-    let package = manifest
-        .package()
-        .context("No [package] section found")?;
+    let package = manifest.package().context("No [package] section found")?;
 
     if let Some(value) = package.get(field) {
         // Pretty print the value

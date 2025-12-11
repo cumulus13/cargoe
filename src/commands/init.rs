@@ -12,81 +12,75 @@ pub fn handle(path: &Path, yes: bool, dry_run: bool) -> Result<()> {
     let package = manifest.package_mut()?;
 
     // Repository
-    if !package.contains_key("repository") {
-        if yes
+    if !package.contains_key("repository")
+        && (yes
             || Confirm::new()
                 .with_prompt("Add repository field?")
                 .default(true)
-                .interact()?
-        {
-            let repo: String = Input::new()
-                .with_prompt("Repository URL")
-                .with_initial_text("https://github.com/user/repo")
-                .interact_text()?;
+                .interact()?)
+    {
+        let repo: String = Input::new()
+            .with_prompt("Repository URL")
+            .with_initial_text("https://github.com/user/repo")
+            .interact_text()?;
 
-            if !dry_run {
-                package.insert("repository", toml_edit::value(repo.clone()));
-            }
-            print_info(&format!("+ repository: {}", repo), false);
+        if !dry_run {
+            package.insert("repository", toml_edit::value(repo.clone()));
         }
+        print_info(&format!("+ repository: {}", repo), false);
     }
 
     // Homepage
-    if !package.contains_key("homepage") {
-        if yes
+    if !package.contains_key("homepage")
+        && (yes
             || Confirm::new()
                 .with_prompt("Add homepage field?")
                 .default(false)
-                .interact()?
-        {
-            let homepage: String = Input::new()
-                .with_prompt("Homepage URL")
-                .interact_text()?;
+                .interact()?)
+    {
+        let homepage: String = Input::new().with_prompt("Homepage URL").interact_text()?;
 
-            if !dry_run {
-                package.insert("homepage", toml_edit::value(homepage.clone()));
-            }
-            print_info(&format!("+ homepage: {}", homepage), false);
+        if !dry_run {
+            package.insert("homepage", toml_edit::value(homepage.clone()));
         }
+        print_info(&format!("+ homepage: {}", homepage), false);
     }
 
     // Documentation
-    if !package.contains_key("documentation") {
-        if yes
+    if !package.contains_key("documentation")
+        && (yes
             || Confirm::new()
                 .with_prompt("Add documentation field? (defaults to docs.rs)")
                 .default(false)
-                .interact()?
-        {
-            let docs: String = Input::new()
-                .with_prompt("Documentation URL")
-                .interact_text()?;
+                .interact()?)
+    {
+        let docs: String = Input::new()
+            .with_prompt("Documentation URL")
+            .interact_text()?;
 
-            if !dry_run {
-                package.insert("documentation", toml_edit::value(docs.clone()));
-            }
-            print_info(&format!("+ documentation: {}", docs), false);
+        if !dry_run {
+            package.insert("documentation", toml_edit::value(docs.clone()));
         }
+        print_info(&format!("+ documentation: {}", docs), false);
     }
 
     // README
-    if !package.contains_key("readme") {
-        if yes
+    if !package.contains_key("readme")
+        && (yes
             || Confirm::new()
                 .with_prompt("Add readme field?")
                 .default(true)
-                .interact()?
-        {
-            let readme: String = Input::new()
-                .with_prompt("README file path")
-                .with_initial_text("README.md")
-                .interact_text()?;
+                .interact()?)
+    {
+        let readme: String = Input::new()
+            .with_prompt("README file path")
+            .with_initial_text("README.md")
+            .interact_text()?;
 
-            if !dry_run {
-                package.insert("readme", toml_edit::value(readme.clone()));
-            }
-            print_info(&format!("+ readme: {}", readme), false);
+        if !dry_run {
+            package.insert("readme", toml_edit::value(readme.clone()));
         }
+        print_info(&format!("+ readme: {}", readme), false);
     }
 
     if !dry_run {

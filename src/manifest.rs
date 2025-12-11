@@ -40,13 +40,12 @@ impl Manifest {
         self.doc.get("package")?.as_table()
     }
 
+    #[allow(dead_code)]
     pub fn get_package_name(&self) -> Option<String> {
-        self.package()?
-            .get("name")?
-            .as_str()
-            .map(|s| s.to_string())
+        self.package()?.get("name")?.as_str().map(|s| s.to_string())
     }
 
+    #[allow(dead_code)]
     pub fn get_package_version(&self) -> Option<String> {
         self.package()?
             .get("version")?

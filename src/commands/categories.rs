@@ -113,7 +113,7 @@ fn add(path: &Path, categories: Vec<String>, dry_run: bool, quiet: bool) -> Resu
 
         let exists = cats
             .iter()
-            .any(|v| v.as_str().map_or(false, |s| s == category));
+            .any(|v| v.as_str().is_some_and(|s| s == category));
 
         if !exists {
             if current_count + cats.iter().filter(|v| v.as_str().is_some()).count() >= 5 {
@@ -152,7 +152,7 @@ fn remove(path: &Path, categories: Vec<String>, dry_run: bool, quiet: bool) -> R
     for category in categories {
         let mut indices = Vec::new();
         for (i, v) in cats.iter().enumerate() {
-            if v.as_str().map_or(false, |s| s == category) {
+            if v.as_str().is_some_and(|s| s == category) {
                 indices.push(i);
             }
         }

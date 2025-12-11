@@ -40,7 +40,9 @@ pub fn handle(path: &Path, strict: bool) -> Result<()> {
             // Check description length
             if let Some(desc) = package.get("description").and_then(|v| v.as_str()) {
                 if desc.len() > 160 {
-                    warnings.push("Description exceeds 160 characters (crates.io will truncate)".to_string());
+                    warnings.push(
+                        "Description exceeds 160 characters (crates.io will truncate)".to_string(),
+                    );
                 }
                 if desc.len() < 10 {
                     warnings.push("Description is very short (consider expanding)".to_string());

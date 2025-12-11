@@ -1,4 +1,7 @@
 // tests/integration_test.rs
+#![allow(deprecated)]
+#![allow(clippy::needless_borrows_for_generic_args)]
+
 use assert_cmd::Command;
 use predicates::prelude::*;
 use std::fs;
@@ -25,7 +28,7 @@ fn test_exclude_add() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "exclude",
@@ -52,7 +55,7 @@ fn test_exclude_list() {
     // Add patterns first
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "exclude",
@@ -65,7 +68,7 @@ fn test_exclude_list() {
     // List them
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&["-m", manifest_path.to_str().unwrap(), "exclude", "list"])
+        .args(["-m", manifest_path.to_str().unwrap(), "exclude", "list"])
         .assert()
         .success()
         .stdout(predicate::str::contains("*.log"));
@@ -79,7 +82,7 @@ fn test_exclude_remove() {
     // Add then remove
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "exclude",
@@ -91,7 +94,7 @@ fn test_exclude_remove() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "exclude",
@@ -110,7 +113,7 @@ fn test_keywords_add() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "keywords",
@@ -135,7 +138,7 @@ fn test_keywords_limit() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "keywords",
@@ -160,7 +163,7 @@ fn test_keywords_length_validation() {
     let long_keyword = "a".repeat(21);
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "keywords",
@@ -179,7 +182,7 @@ fn test_categories_add() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "categories",
@@ -198,7 +201,7 @@ fn test_set_field() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "set",
@@ -220,7 +223,7 @@ fn test_get_field() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&["-m", manifest_path.to_str().unwrap(), "get", "name"])
+        .args(["-m", manifest_path.to_str().unwrap(), "get", "name"])
         .assert()
         .success()
         .stdout(predicate::str::contains("test-package"));
@@ -233,7 +236,7 @@ fn test_validate_basic() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&["-m", manifest_path.to_str().unwrap(), "validate"])
+        .args(["-m", manifest_path.to_str().unwrap(), "validate"])
         .assert()
         .success();
 }
@@ -245,7 +248,7 @@ fn test_validate_strict_missing_fields() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "validate",
@@ -265,7 +268,7 @@ fn test_dry_run() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "--dry-run",
@@ -288,7 +291,7 @@ fn test_info_command() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&["-m", manifest_path.to_str().unwrap(), "info"])
+        .args(["-m", manifest_path.to_str().unwrap(), "info"])
         .assert()
         .success()
         .stdout(predicate::str::contains("test-package"))
@@ -302,7 +305,7 @@ fn test_badges_add() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "badges",
@@ -325,7 +328,7 @@ fn test_metadata_add() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "metadata",
@@ -347,7 +350,7 @@ fn test_quiet_flag() {
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "--quiet",

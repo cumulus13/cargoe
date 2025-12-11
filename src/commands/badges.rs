@@ -35,7 +35,10 @@ fn add(
         .context("badges is not a table")?;
 
     if badges.contains_key(badge_type) {
-        print_warning(&format!("Badge '{}' already exists, updating...", badge_type));
+        print_warning(&format!(
+            "Badge '{}' already exists, updating...",
+            badge_type
+        ));
     }
 
     let badge_table = badges

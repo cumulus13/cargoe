@@ -1,4 +1,7 @@
 // src/main.rs
+#![allow(clippy::unnecessary_map_or)]
+#![allow(clippy::collapsible_if)]
+
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
@@ -196,10 +199,7 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
 
     if !cli.manifest_path.exists() {
-        anyhow::bail!(
-            "Cargo.toml not found at: {}",
-            cli.manifest_path.display()
-        );
+        anyhow::bail!("Cargo.toml not found at: {}", cli.manifest_path.display());
     }
 
     let result = match cli.command {
@@ -227,4 +227,3 @@ fn main() -> Result<()> {
 
     result.context("Failed to execute command")
 }
-

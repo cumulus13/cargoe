@@ -1,3 +1,6 @@
+#![allow(deprecated)]
+#![allow(clippy::needless_borrows_for_generic_args)]
+
 use assert_cmd::Command;
 use predicates::prelude::*;
 use std::fs;
@@ -19,7 +22,13 @@ version = "0.1.0"
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&["-m", manifest_path.to_str().unwrap(), "exclude", "add", "*.log"])
+        .args([
+            "-m",
+            manifest_path.to_str().unwrap(),
+            "exclude",
+            "add",
+            "*.log",
+        ])
         .assert()
         .success()
         .stdout(predicate::str::contains("+ *.log"));
@@ -45,7 +54,7 @@ version = "0.1.0"
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&[
+        .args([
             "-m",
             manifest_path.to_str().unwrap(),
             "keywords",
@@ -78,7 +87,12 @@ version = "0.1.0"
 
     Command::cargo_bin("cargoe")
         .unwrap()
-        .args(&["-m", manifest_path.to_str().unwrap(), "validate", "--strict"])
+        .args([
+            "-m",
+            manifest_path.to_str().unwrap(),
+            "validate",
+            "--strict",
+        ])
         .assert()
         .failure()
         .stdout(predicate::str::contains("Missing 'description'"));

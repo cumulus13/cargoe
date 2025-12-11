@@ -33,8 +33,8 @@ fn add(path: &Path, key: &str, value: &str, json: bool, dry_run: bool, quiet: bo
         if i == keys.len() - 1 {
             // Last key - set the value
             let item_value = if json {
-                let parsed: serde_json::Value = serde_json::from_str(value)
-                    .context("Invalid JSON value")?;
+                let parsed: serde_json::Value =
+                    serde_json::from_str(value).context("Invalid JSON value")?;
                 json_to_toml_item(&parsed)?
             } else {
                 toml_edit::value(value)
