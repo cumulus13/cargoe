@@ -3,7 +3,8 @@
 #![allow(clippy::collapsible_if)]
 
 use anyhow::{Context, Result};
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, ArgAction};
+use clap_version_flag::colorful_version;
 use std::path::PathBuf;
 
 mod commands;
@@ -15,11 +16,15 @@ use commands::*;
 #[derive(Parser)]
 #[command(
     name = "cargoe",
-    version,
+    // version,
     about = "Advanced Cargo.toml management tool by Hadi Cahyadi <cumulus13@gmail.com>",
-    long_about = "A powerful CLI tool for managing Cargo.toml fields that cargo doesn't handle directly.\nSupports exclude/include patterns, keywords, categories, badges, and more."
+    long_about = "A powerful CLI tool for managing Cargo.toml fields that cargo doesn't handle directly.\nSupports exclude/include patterns, keywords, categories, badges, and more.",
+    disable_version_flag = true
 )]
 struct Cli {
+    #[arg(short = 'V', long = "version", action = ArgAction::SetTrue)]  // HAPUS short = 'v'
+    version: bool,
+
     #[command(subcommand)]
     command: Commands,
 
@@ -195,12 +200,42 @@ enum MetadataCommands {
     Clear,
 }
 
+// fn print_version() {
+//     println!(
+//         "cargoe v{} by Hadi Cahyadi <cumulu13@gmail.com>",
+//         env!("CARGO_PKG_VERSION")
+//     );
+// }
+
 fn main() -> Result<()> {
+    // Check for version flag BEFORE parsing
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() == 2 && (args[1] == "-V" || args[1] == "--version") {
+        let version = colorful_version!();
+        version.print_and_exit();
+    }
+
     let cli = Cli::parse();
+
+    // if cli.version {
+    //     print_version();
+    //     return Ok(());
+    // }
+
+    // if cli.version {
+    //     let version = colorful_version!(); 
+    //     version.print();
+    //     return Ok(());
+    // }
 
     if !cli.manifest_path.exists() {
         anyhow::bail!("Cargo.toml not found at: {}", cli.manifest_path.display());
     }
+
+    // Handle case where no subcommand is provided
+    // let command = cli.command.ok_or_else(|| {
+    //     anyhow::anyhow!("No subcommand provided. Use --help to see available commands.")
+    // })?;
 
     let result = match cli.command {
         Commands::Exclude(cmd) => exclude::handle(&cli.manifest_path, cmd, cli.dry_run, cli.quiet),
@@ -226,4 +261,5 @@ fn main() -> Result<()> {
     };
 
     result.context("Failed to execute command")
+    
 }

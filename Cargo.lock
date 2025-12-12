@@ -107,11 +107,12 @@ dependencies = [
 
 [[package]]
 name = "cargoe"
-version = "0.1.13"
+version = "0.1.14"
 dependencies = [
  "anyhow",
  "assert_cmd",
  "clap",
+ "clap-version-flag",
  "colored",
  "dialoguer",
  "once_cell",
@@ -137,6 +138,17 @@ checksum = "c9e340e012a1bf4935f5282ed1436d1489548e8f72308207ea5df0e23d2d03f8"
 dependencies = [
  "clap_builder",
  "clap_derive",
+]
+
+[[package]]
+name = "clap-version-flag"
+version = "1.0.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "18936f3f7f2ef4f4b619de6a62586a265797e0f53b6060f53bd3eb42cbaaab47"
+dependencies = [
+ "clap",
+ "colored",
+ "thiserror",
 ]
 
 [[package]]
