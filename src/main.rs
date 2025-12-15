@@ -1,4 +1,9 @@
-// src/main.rs
+// File: src\main.rs
+// Author: Hadi Cahyadi <cumulus13@gmail.com>
+// Date: 2025-12-15
+// Description: Advanced Cargo.toml management tool
+// License: MIT
+
 #![allow(clippy::unnecessary_map_or)]
 #![allow(clippy::collapsible_if)]
 
@@ -22,7 +27,7 @@ use commands::*;
     disable_version_flag = true
 )]
 struct Cli {
-    #[arg(short = 'V', long = "version", action = ArgAction::SetTrue)]  // HAPUS short = 'v'
+    #[arg(short = 'V', long = "version", action = ArgAction::SetTrue)]
     version: bool,
 
     #[command(subcommand)]
@@ -260,6 +265,6 @@ fn main() -> Result<()> {
         Commands::Init { yes } => init::handle(&cli.manifest_path, yes, cli.dry_run),
     };
 
-    result.context("Failed to execute command")
+    result.context("❌ Failed to execute command")
     
 }

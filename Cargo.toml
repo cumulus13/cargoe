@@ -4,7 +4,7 @@ bin = [
 
 [package]
 name = "cargoe"
-version = "0.1.14"
+version = "0.1.15"
 edition = "2021"
 rust-version = "1.70"
 authors = [
@@ -37,6 +37,7 @@ exclude = [
     "target/",
     "build.bat",
     ".pt/",
+    "debug.log",
 ]
 
 [package.metadata.docs.rs]
